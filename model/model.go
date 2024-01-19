@@ -1,14 +1,24 @@
 package model
 
 import (
+	"io"
+	"os"
+
 	"github.com/make-42/cpu3d/utils"
 
 	"github.com/hschendel/stl"
 	"golang.org/x/exp/slices"
 )
 
-func ReadSTLFileToEdges(STLFilePath string) []utils.SpaceEdge {
-	solid, err := stl.ReadFile(STLFilePath)
+func ReadSTLFileFromPathToEdges(STLFilePath string) []utils.SpaceEdge {
+	STLFile, err := os.Open("assets/gif/komi-san-48.gif")
+	utils.CheckError(err)
+	defer STLFile.Close()
+	return ReadSTLFileToEdges(STLFile)
+}
+
+func ReadSTLFileToEdges(STLFile io.ReadSeeker) []utils.SpaceEdge {
+	solid, err := stl.ReadAll(STLFile)
 	utils.CheckError(err)
 	tris := solid.Triangles
 	edges := []utils.SpaceEdge{}

@@ -94,7 +94,7 @@ func main() {
 			render.RenderScreenLines(1, displayResolution, &lines, fmt.Sprintf("output/teacup/output-lines-%04d.png", i))
 		}
 	*/
-	edgesWM := model.ReadSTLFileToEdges("input/venus - simplified med.stl")
+	edgesWM := model.ReadSTLFileFromPathToEdges("input/venus - simplified med.stl")
 	edgesWMCentered := transform.EdgesTranslateWorldCoords(&edgesWM, &utils.SpaceCoords{X: 0, Y: 0, Z: 0})
 	for i := 0; i < frameCount; i++ {
 		progress := float64(i) / float64(frameCount-1)
