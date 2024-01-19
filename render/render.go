@@ -19,13 +19,16 @@ func RenderScreenLines(resolution utils.IntPair, lines *[]utils.CameraLine, outF
 	var bg = color.RGBA{41, 41, 41, 255}
 	var pink = color.RGBA{255, 64, 105, 255}
 	draw.Draw(img, img.Bounds(), &image.Uniform{bg}, image.ZP, draw.Src)
-
-	for _, line := range *lines {
-		bresenham.DrawLine(img, int(line.A.X*float64(resolution.X)), int(line.A.Y*float64(resolution.Y)), int(line.B.X*float64(resolution.X)), int(line.B.Y*float64(resolution.Y)), pink)
-	}
+	RenderScreenLinesToImage(img, pink, resolution, lines)
 	toimg, _ := os.Create(outFile)
 	defer toimg.Close()
 	png.Encode(toimg, img)
+}
+
+func RenderScreenLinesToImage(image *image.RGBA, fgColor color.RGBA, resolution utils.IntPair, lines *[]utils.CameraLine) {
+	for _, line := range *lines {
+		bresenham.DrawLine(image, int(line.A.X*float64(resolution.X)), int(line.A.Y*float64(resolution.Y)), int(line.B.X*float64(resolution.X)), int(line.B.Y*float64(resolution.Y)), fgColor)
+	}
 }
 
 /*
