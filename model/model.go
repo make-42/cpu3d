@@ -11,7 +11,7 @@ import (
 )
 
 func ReadSTLFileFromPathToEdges(STLFilePath string) []utils.SpaceEdge {
-	STLFile, err := os.Open("assets/gif/komi-san-48.gif")
+	STLFile, err := os.Open(STLFilePath)
 	utils.CheckError(err)
 	defer STLFile.Close()
 	return ReadSTLFileToEdges(STLFile)
